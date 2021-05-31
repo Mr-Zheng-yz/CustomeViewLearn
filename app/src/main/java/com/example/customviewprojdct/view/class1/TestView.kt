@@ -1,4 +1,4 @@
-package com.example.customviewprojdct.view
+package com.example.customviewprojdct.view.class1
 
 import android.content.Context
 import android.graphics.Canvas
@@ -10,7 +10,11 @@ import android.view.View
 import com.example.customviewprojdct.extensions.dp
 
 val RADIUS = 100.dp
-class TestView(context: Context, attrs: AttributeSet) : View(context, attrs) {
+class TestView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    d: Int = 0
+) : View(context, attrs,0) {
 
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
     }
@@ -28,7 +32,7 @@ class TestView(context: Context, attrs: AttributeSet) : View(context, attrs) {
             Path.Direction.CW
         )
 //        path.fillType = Path.FillType.EVEN_ODD
-        pathMeasure = PathMeasure(path,false)
+        pathMeasure = PathMeasure(path, false)
 //        pathMeasure.length  // 返回Paht长度
 //        pathMeasure.getPosTan() //返回一个正切值
     }

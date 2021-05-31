@@ -1,4 +1,4 @@
-package com.example.customviewprojdct.view
+package com.example.customviewprojdct.view.class1
 
 import android.content.Context
 import android.graphics.*
@@ -8,7 +8,12 @@ import com.example.customviewprojdct.extensions.dp
 import kotlin.math.cos
 import kotlin.math.sin
 
-class DashboardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
+class DashboardView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) :
+    View(context, attrs, defStyleAttr) {
     companion object {
         private val RADIUS = 150.dp
         private val OPEN_ANGLE = 120  //仪表盘底部开口角度
@@ -66,7 +71,7 @@ class DashboardView(context: Context, attrs: AttributeSet) : View(context, attrs
         canvas.drawLine(
             width / 2f,
             height / 2f,
-            width / 2f + LENGTH * cos(Math.toRadians(((90 + OPEN_ANGLE  / 2) + (360 - OPEN_ANGLE) / 20 * SCALE).toDouble())).toFloat(),
+            width / 2f + LENGTH * cos(Math.toRadians(((90 + OPEN_ANGLE / 2) + (360 - OPEN_ANGLE) / 20 * SCALE).toDouble())).toFloat(),
             height / 2f + LENGTH * sin(Math.toRadians(((90 + OPEN_ANGLE / 2) + (360 - OPEN_ANGLE) / 20 * SCALE).toDouble())).toFloat(),
             paint
         )

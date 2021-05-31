@@ -1,4 +1,4 @@
-package com.example.customviewprojdct.view
+package com.example.customviewprojdct.view.class1
 
 import android.content.Context
 import android.graphics.Canvas
@@ -10,17 +10,21 @@ import com.example.customviewprojdct.extensions.dp
 import kotlin.math.cos
 import kotlin.math.sin
 
-class PieView(context: Context, attribute: AttributeSet) : View(context, attribute) {
+class PieView @JvmOverloads constructor(
+    context: Context,
+    attribute: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : View(context, attribute, defStyleAttr) {
     companion object {
         val RADIUS = 150.dp
         val OFFSET_LENGTH = 50f
         val OFFSET_INDEX = 2
         val ANGLE = floatArrayOf(60f, 90f, 150f, 60f)
         val COLOR = listOf(
-            Color.parseColor("#DC143C")
-            , Color.parseColor("#00BFFF")
-            , Color.parseColor("#FFFF00")
-            , Color.parseColor("#7CFC00")
+            Color.parseColor("#DC143C"),
+            Color.parseColor("#00BFFF"),
+            Color.parseColor("#FFFF00"),
+            Color.parseColor("#7CFC00")
         )
     }
 
@@ -41,8 +45,14 @@ class PieView(context: Context, attribute: AttributeSet) : View(context, attribu
             }
             paint.color = COLOR[index]
             canvas.drawArc(
-                width / 2f - RADIUS, height / 2f - RADIUS, width / 2f + RADIUS, height / 2 + RADIUS
-                , startAngle, angle, true, paint
+                width / 2f - RADIUS,
+                height / 2f - RADIUS,
+                width / 2f + RADIUS,
+                height / 2 + RADIUS,
+                startAngle,
+                angle,
+                true,
+                paint
             )
             startAngle += angle
             if (index == OFFSET_INDEX) {
