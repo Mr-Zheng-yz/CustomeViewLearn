@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="true"
+        android:bottom="1dp"
+        android:left="16dp"
+        android:right="16dp"
+        android:top="1dp">
+        <layer-list>
+            <!-- 连框颜色值 -->
+            <item
+                android:left="8dp"
+                android:right="8dp">
+                <shape>
+                    <solid android:color="#207CCC" />
+                    <corners android:radius="25dp" />
+                </shape>
+            </item>
+            <!-- 主体背景颜色值 -->
+            <item
+                android:bottom="0dp"
+                android:left="8dp"
+                android:right="8dp"
+                android:top="0dp">
+                <shape>
+                    <solid android:color="#207CCC" />
+                    <corners android:radius="8dp" /> <!-- 设置圆角半径 -->
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+    <item android:state_selected="false"
+        android:left="16dp"
+        android:right="16dp">
+        <layer-list>
+            <!-- 连框颜色值 -->
+            <item
+                android:left="8dp"
+                android:right="8dp">
+                <shape>
+                    <solid android:color="#050E15" />
+                    <corners android:radius="8dp" />
+                </shape>
+            </item>
+            <!-- 主体背景颜色值 -->
+            <item
+                android:bottom="1dp"
+                android:left="8dp"
+                android:right="8dp"
+                android:top="1dp">
+                <shape>
+                    <solid android:color="#050E15" />
+                    <corners android:radius="8dp" /> <!-- 设置圆角半径 -->
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+</selector>

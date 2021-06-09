@@ -6,8 +6,45 @@
     android:layout_height="match_parent"
     tools:context=".activity.TestActivity">
 
-    <com.example.customviewprojdct.view.class2.XfermodeViewDemoView
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/text_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabBackground="@drawable/test_selector"
+        app:tabIndicator="@null"
+        app:tabTextColor="#fff"
+        app:tabPadding="42dp"
+        app:tabSelectedTextColor="#031D68">
+
+        <com.google.android.material.tabs.TabItem
+            android:text="里程"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.tabs.TabItem
+            android:text="时长"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.tabs.TabItem
+            android:text="轻松"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.tabs.TabItem
+            android:text="将数"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <FrameLayout
+        android:foreground="#33ff0000"
+        android:layout_margin="16dp"
+        android:background="@drawable/tablayout_item_sel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="80dp"
+        android:layout_height="80dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
