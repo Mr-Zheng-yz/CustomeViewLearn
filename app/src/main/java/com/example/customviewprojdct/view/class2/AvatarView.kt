@@ -51,10 +51,10 @@ class AvatarView @JvmOverloads constructor(
     fun getAvatart(width: Int): Bitmap {
         val options = BitmapFactory.Options()
         options.inJustDecodeBounds = true
-        BitmapFactory.decodeResource(resources, R.drawable.avatar)
+        BitmapFactory.decodeResource(resources, R.drawable.avatar,options)
         options.inJustDecodeBounds = false
         options.inDensity = options.outWidth
         options.inTargetDensity = width
-        return BitmapFactory.decodeResource(resources, R.drawable.avatar)
+        return BitmapFactory.decodeResource(resources, R.drawable.avatar,options)
     }
 }

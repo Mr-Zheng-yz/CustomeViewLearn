@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.example.customviewprojdct.view.class3.SportView
+        android:id="@+id/sport_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:gravity="right"
+        android:orientation="vertical">
+
+        <ToggleButton
+            android:id="@+id/tb_text_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:textOff="通过bounds测量"
+            android:textOn="通过ascent和descent"/>
+
+        <ToggleButton
+            android:id="@+id/tb_text_font"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:textOff="默认字体"
+            android:textOn="自定义字体"/>
+
+        <Button
+            android:id="@+id/btn_text_change"
+            android:text="文字改变"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</FrameLayout>

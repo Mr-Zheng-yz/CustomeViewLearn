@@ -12,6 +12,6 @@ class TestActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test)
-        testView = findViewById(R.id.text_view)
+        testView = findViewById(R.id.test_view)
     }
 }
