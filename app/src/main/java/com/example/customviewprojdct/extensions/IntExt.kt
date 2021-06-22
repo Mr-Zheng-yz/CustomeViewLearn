@@ -5,7 +5,7 @@ import android.util.TypedValue
 import java.lang.reflect.TypeVariable
 
 val Int.dp
-    get() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), Resources.getSystem().displayMetrics)
+    get() = this.toFloat().dp
 
 fun Int.dp(): Float {
     return TypedValue.applyDimension(
