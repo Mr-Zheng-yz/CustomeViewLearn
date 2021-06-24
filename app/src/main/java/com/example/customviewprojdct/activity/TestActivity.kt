@@ -13,5 +13,16 @@ class TestActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test)
         testView = findViewById(R.id.test_view)
+
+        testView.setOnClickListener {
+            testView.animate()
+                .rotation(40f)
+                .alpha(50f)
+                .scaleX(2f)
+                .scaleY(2f)
+                .translationX(300f)
+                .translationY(800f)
+                .duration = 1000
+        }
     }
 }
