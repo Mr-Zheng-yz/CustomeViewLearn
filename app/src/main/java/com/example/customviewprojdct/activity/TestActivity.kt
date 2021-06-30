@@ -6,7 +6,9 @@ import android.graphics.Bitmap
 import android.graphics.PointF
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.graphics.drawable.toDrawable
@@ -16,6 +18,8 @@ import com.example.customviewprojdct.view.class5.PointFEvaluator
 import com.example.customviewprojdct.view.class5.PointView
 import com.example.customviewprojdct.view.class5.ProvinceEvaluator
 import com.example.customviewprojdct.view.class5.ProvinceView
+import com.example.customviewprojdct.view.class8.ColoredTextView
+import com.example.customviewprojdct.view.class8.TagLayout
 
 class TestActivity : AppCompatActivity() {
 
@@ -27,6 +31,7 @@ class TestActivity : AppCompatActivity() {
         testView = findViewById(R.id.test_view)
 
         testView.setOnClickListener {
+
             //Point属性动画
 //            val animator = ObjectAnimator.ofObject(testView,"point",
 //                PointFEvaluator(),PointF(0f,0f),PointF(200.dp,200.dp))

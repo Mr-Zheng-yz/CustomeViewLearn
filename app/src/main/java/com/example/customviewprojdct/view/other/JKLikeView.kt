@@ -1,6 +1,5 @@
 package com.example.customviewprojdct.view.other
 
-import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.content.Context
 import android.graphics.Canvas
@@ -9,9 +8,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import androidx.core.animation.addListener
 import androidx.core.animation.doOnEnd
-import androidx.core.animation.doOnRepeat
 import androidx.core.graphics.toColorInt
 import com.example.customviewprojdct.extensions.dp
 
@@ -21,7 +18,7 @@ class JKLikeView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : View(context, attrs, defStyleAttr){
+) : View(context, attrs, defStyleAttr) {
     private var paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = "#666666".toColorInt()
         textSize = 16.dp
@@ -44,6 +41,7 @@ class JKLikeView @JvmOverloads constructor(
                     hideAnimator.start()
                 } else {
                     nextNumber = number - 1
+                    number -= 1
                     hideAnimator.reverse()
                 }
             }
