@@ -77,4 +77,9 @@ class TagLayout @JvmOverloads constructor(
         return MarginLayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
     }
 
+    //如果不是滑动控件，不要让子View触摸反馈延迟
+    override fun shouldDelayChildPressedState(): Boolean {
+        return false
+    }
+
 }
