@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".activity.TestActivity">
 
-    <com.example.customviewprojdct.view.class8.TagLayoutDemo
+    <com.example.customviewprojdct.view.class10.ScalableImageView
         android:id="@+id/test_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
