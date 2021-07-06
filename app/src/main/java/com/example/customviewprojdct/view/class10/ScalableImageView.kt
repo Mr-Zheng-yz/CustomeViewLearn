@@ -81,6 +81,7 @@ class ScalableImageView @JvmOverloads constructor(
             smallScale = h.toFloat() / bitmap.height
             bigScale = w.toFloat() / bitmap.width * EXTRA_SCALE
         }
+        //初始化
         currentScale = smallScale
         scaleAnimator.setFloatValues(smallScale,bigScale)
         Log.i("yanze", "big:$bigScale small:$smallScale")
@@ -97,9 +98,14 @@ class ScalableImageView @JvmOverloads constructor(
         canvas.drawBitmap(bitmap, originalOffsetX, originalOffsetY, paint)
     }
 
+    //两种手势同时监听，当捏撑时，由捏撑监听起抢夺事件
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        return gestureDetector.onTouchEvent(event)
-//        return scaleGestureDetector.onTouchEvent(event)
+        scaleGestureDetector.onTouchEvent(event)
+        //进入捏撑流程，不再处理双击等手势
+        if (!scaleGestureDetector.isInProgress) {
+            gestureDetector.onTouchEvent(event)
+        }
+        return true
     }
 
 
@@ -203,17 +209,29 @@ class ScalableImageView @JvmOverloads constructor(
      * 捏撑手势🤏
      */
     inner class HenScaleGestureDetectorListener : ScaleGestureDetector.OnScaleGestureListener {
-        //捏撑过程
-        override fun onScale(detector: ScaleGestureDetector?): Boolean {
+        //捏撑过程，返回值：返回你是否消费了当前放缩系数
+        override fun onScale(detector: ScaleGestureDetector): Boolean {
+            // detector.scaleFactor：【返回放缩系数】：
+            // 如果返回false，拿到的就是当前状态和初始状态的比值；
+            // 如果返回true，返回的就是当前状态和上一状态的比值。
+            // 如果进行修正，那么不消费本次放缩系数（一直保留）
+            val tempCurrentScale = currentScale * detector.scaleFactor
+            return if (tempCurrentScale < smallScale || tempCurrentScale > bigScale) {
+                false
+            } else {
+                currentScale = tempCurrentScale
+                true
+            }
+        }
+
+        override fun onScaleBegin(detector: ScaleGestureDetector): Boolean {
+            //放缩增加捏撑中心点的初始偏移（修复捏撑不跟手）
+            offsetX = (detector.focusX - width / 2f) * (1 - bigScale / smallScale)
+            offsetY = (detector.focusY - height / 2f) * (1 - bigScale / smallScale)
             return true
         }
 
-        override fun onScaleBegin(detector: ScaleGestureDetector?): Boolean {
-            TODO("Not yet implemented")
-        }
-
         override fun onScaleEnd(detector: ScaleGestureDetector?) {
-            TODO("Not yet implemented")
         }
     }
 
