@@ -8,11 +8,13 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
+import android.view.ScaleGestureDetector
 import android.view.View
 import android.widget.OverScroller
 import android.widget.Scroller
 import androidx.core.animation.doOnEnd
 import androidx.core.view.GestureDetectorCompat
+import androidx.core.view.ScaleGestureDetectorCompat
 import androidx.core.view.ViewCompat
 import com.example.customviewprojdct.extensions.dp
 import com.example.customviewprojdct.extensions.getAvatart
@@ -43,6 +45,9 @@ class ScalableImageView @JvmOverloads constructor(
     //手势监听
     private val gestureDetectorListener = HenGestureDetector()
     private val gestureDetector = GestureDetectorCompat(context, gestureDetectorListener)
+    //捏撑监听🤏
+    private val scaleGestureDetectorListener = HenScaleGestureDetectorListener()
+    private val scaleGestureDetector = ScaleGestureDetector(context,scaleGestureDetectorListener)
     private var big = false
     private var scaleFraction = 0f
         set(value) {
@@ -93,7 +98,8 @@ class ScalableImageView @JvmOverloads constructor(
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        return gestureDetector.onTouchEvent(event)
+//        return gestureDetector.onTouchEvent(event)
+        return scaleGestureDetector.onTouchEvent(event)
     }
 
 
@@ -193,4 +199,24 @@ class ScalableImageView @JvmOverloads constructor(
         }
     }
 
+    /**
+     * 捏撑手势🤏
+     */
+    inner class HenScaleGestureDetectorListener : ScaleGestureDetector.OnScaleGestureListener {
+        //捏撑过程
+        override fun onScale(detector: ScaleGestureDetector?): Boolean {
+            return true
+        }
+
+        override fun onScaleBegin(detector: ScaleGestureDetector?): Boolean {
+            TODO("Not yet implemented")
+        }
+
+        override fun onScaleEnd(detector: ScaleGestureDetector?) {
+            TODO("Not yet implemented")
+        }
+    }
+
 }
+
+
