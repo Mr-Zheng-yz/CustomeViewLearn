@@ -27,8 +27,7 @@ class ScalableImageView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : View(context, attrs, defStyleAttr), GestureDetector.OnGestureListener,
-    GestureDetector.OnDoubleTapListener ,Runnable{
+) : View(context, attrs, defStyleAttr){
 
     private val bitmap = getAvatart(resources, 300.dp.toInt())
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
@@ -38,22 +37,28 @@ class ScalableImageView @JvmOverloads constructor(
     private var offsetY = 0f
     private var smallScale = 0f
     private var bigScale = 0f
-    private val gestureDetector = GestureDetectorCompat(context, this).apply {
-        setOnDoubleTapListener(this@ScalableImageView)
-    }
+
+    //滑动任务
+    private val flingRunnable = HenFlingRunnable()
+    //手势监听
+    private val gestureDetectorListener = HenGestureDetector()
+    private val gestureDetector = GestureDetectorCompat(context, gestureDetectorListener)
     private var big = false
     private var scaleFraction = 0f
         set(value) {
             field = value
             invalidate()
         }
-    private val scaleAnimator = ObjectAnimator.ofFloat(this, "scaleFraction", 0f, 1f).apply {
-        doOnEnd {
-            //修复由于offsetX和offsetY没有重置导致图片再次放大时产生额外偏移：动画缩小后，重置图片偏移
-            if (!big) {
-                offsetX = 0f
-                offsetY = 0f
-            }
+    private val scaleAnimator by lazy {
+        ObjectAnimator.ofFloat(this, "scaleFraction", 0f, 1f).apply {
+//            doOnEnd {
+                //加上跟随手指双击放大功能后，这里可以去掉了
+                //修复由于offsetX和offsetY没有重置导致图片再次放大时产生额外偏移：动画缩小后，重置图片偏移
+//            if (!big) {
+//                offsetX = 0f
+//                offsetY = 0f
+//            }
+//            }
         }
     }
     private val overScroller = OverScroller(context)
@@ -91,108 +96,101 @@ class ScalableImageView @JvmOverloads constructor(
         return gestureDetector.onTouchEvent(event)
     }
 
-    override fun onDown(e: MotionEvent?): Boolean {
-        return true
-    }
 
-    override fun onShowPress(e: MotionEvent?) {
-    }
+    /**
+     * 手势操作
+     */
+    inner class HenGestureDetector : GestureDetector.SimpleOnGestureListener() {
 
-    override fun onSingleTapUp(e: MotionEvent?): Boolean {
-        return false
-    }
+        override fun onDown(e: MotionEvent?): Boolean {
+            return true
+        }
 
-    override fun onScroll(
-        e1: MotionEvent?,
-        e2: MotionEvent?,
-        distanceX: Float,
-        distanceY: Float
-    ): Boolean {
-        if (big) {
+        override fun onScroll(
+            e1: MotionEvent?,
+            e2: MotionEvent?,
+            distanceX: Float,
+            distanceY: Float
+        ): Boolean {
+            if (big) {
 //            Log.i("yanze","$distanceX $distanceY")
-            offsetX -= distanceX
+                offsetX -= distanceX
+                offsetY -= distanceY
+                fixOffsets()
+//            Log.i("yanze","offset:$offsetX $offsetY")
+                invalidate()
+            }
+            return false
+        }
+
+        override fun onFling(
+            e1: MotionEvent?,
+            e2: MotionEvent?,
+            velocityX: Float,
+            velocityY: Float
+        ): Boolean {
+            if (big) {
+                //1.计算，原点选择图片正中心位置,起始点就直接是offsetX和offsetY了
+                overScroller.fling(
+                    offsetX.toInt(), offsetY.toInt(), velocityX.toInt(), velocityY.toInt()
+                    , (-(bitmap.width * bigScale - width) / 2).toInt()
+                    , ((bitmap.width * bigScale - width) / 2).toInt()
+                    , (-(bitmap.height * bigScale - height) / 2).toInt()
+                    , ((bitmap.height * bigScale - height) / 2).toInt()
+                )
+                //生硬的调用
+                //        for (i in 10..1000 step 10) {
+                //            postDelayed({ refresh() }, i.toLong())
+                //        }
+                ViewCompat.postOnAnimation(this@ScalableImageView,flingRunnable)
+            }
+            return false
+        }
+
+        //双击
+        override fun onDoubleTap(e: MotionEvent): Boolean {
+            big = !big
+            if (big) {
+                //双击放大，增加手指偏移（放大手指双击位置）
+                //求出初始偏移？？
+                offsetX = (e.x - width / 2f) * (1 - bigScale / smallScale)
+                offsetY = (e.y - height / 2f) * (1 - bigScale / smallScale)
+                Log.i("yanze","${offsetX} ${offsetY} : ${(1 - bigScale / smallScale)}")
+                //限制边界
+                fixOffsets()
+                scaleAnimator.start()
+            } else {
+                scaleAnimator.reverse()
+            }
+            return true
+        }
+
+        fun fixOffsets() {
             offsetX = min(offsetX,(bitmap.width * bigScale - width) / 2)
             offsetX = max(offsetX,-(bitmap.width * bigScale - width) / 2)
-            offsetY -= distanceY
             offsetY = min(offsetY,(bitmap.height * bigScale - height) / 2)
             offsetY = max(offsetY,-(bitmap.height * bigScale - height) / 2)
-//            Log.i("yanze","offset:$offsetX $offsetY")
-            invalidate()
         }
-        return false
+
     }
 
-    override fun onLongPress(e: MotionEvent?) {
-    }
-
-    override fun onFling(
-        e1: MotionEvent?,
-        e2: MotionEvent?,
-        velocityX: Float,
-        velocityY: Float
-    ): Boolean {
-        if (big) {
-            //1.计算，原点选择图片正中心位置,起始点就直接是offsetX和offsetY了
-            overScroller.fling(
-                offsetX.toInt(), offsetY.toInt(), velocityX.toInt(), velocityY.toInt()
-                , (-(bitmap.width * bigScale - width) / 2).toInt()
-                , ((bitmap.width * bigScale - width) / 2).toInt()
-                , (-(bitmap.height * bigScale - height) / 2).toInt()
-                , ((bitmap.height * bigScale - height) / 2).toInt()
-            )
-            //生硬的调用
-    //        for (i in 10..1000 step 10) {
-    //            postDelayed({ refresh() }, i.toLong())
-    //        }
-            ViewCompat.postOnAnimation(this,this)
-        }
-        return false
-    }
-
-    //2.掐表拿值
-    override fun run() {
-        //计算当前时间对应值
-        if (overScroller.computeScrollOffset()) {
-            //获取值
-            offsetX = overScroller.currX.toFloat()
-            offsetY = overScroller.currY.toFloat()
-            invalidate()
-            //用lambda表达式做任务，每次都会创建对象，影响性能：postOnAnimation { refresh() }
-            //postOnAnimation(this@ScalableImageView)：高版本API才有该方法，为了兼容行，使用下面这种方式
-            ViewCompat.postOnAnimation(this,this)
+    /**
+     * 滑动计算刷新位置
+     */
+    inner class HenFlingRunnable : Runnable{
+        //2.掐表拿值
+        override fun run() {
+            //计算当前时间对应值
+            if (overScroller.computeScrollOffset()) {
+                //获取值
+                offsetX = overScroller.currX.toFloat()
+                offsetY = overScroller.currY.toFloat()
+                invalidate()
+                //用lambda表达式做任务，每次都会创建对象，影响性能：postOnAnimation { refresh() }
+                //postOnAnimation(this@ScalableImageView)：高版本API才有该方法，为了兼容行，使用下面这种方式
+                ViewCompat.postOnAnimation(this@ScalableImageView,this)
+            }
         }
     }
-
-    //单击
-    override fun onSingleTapConfirmed(e: MotionEvent?): Boolean {
-        return false
-    }
-
-    //双击
-    override fun onDoubleTap(e: MotionEvent): Boolean {
-        big = !big
-        if (big) {
-            //双击放大，增加手指偏移（放大手指双击位置）
-//            offsetX = (width / 2 - e.x) * bigScale
-            offsetX = e.x - width / 2 * (1 - bigScale / smallScale)
-//            offsetY = (height / 2 - e.y) * bigScale
-            offsetY = (e.y - height / 2) * (1 - bigScale / smallScale)
-            //限制边界
-//            offsetX = min(offsetX,(bitmap.width * bigScale - width) / 2)
-//            offsetX = max(offsetX,-(bitmap.width * bigScale - width) / 2)
-//            offsetY = min(offsetY,(bitmap.height * bigScale - height) / 2)
-//            offsetY = max(offsetY,-(bitmap.height * bigScale - height) / 2)
-            scaleAnimator.start()
-        } else {
-            scaleAnimator.reverse()
-        }
-        return true
-    }
-
-    //双击后续事件
-    override fun onDoubleTapEvent(e: MotionEvent?): Boolean {
-        return false
-    }
-
 
 }
