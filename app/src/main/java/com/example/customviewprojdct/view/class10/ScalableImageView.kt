@@ -49,13 +49,13 @@ class ScalableImageView @JvmOverloads constructor(
     private val scaleGestureDetectorListener = HenScaleGestureDetectorListener()
     private val scaleGestureDetector = ScaleGestureDetector(context,scaleGestureDetectorListener)
     private var big = false
-    private var scaleFraction = 0f
+    private var currentScale = 0f
         set(value) {
             field = value
             invalidate()
         }
-    private val scaleAnimator by lazy {
-        ObjectAnimator.ofFloat(this, "scaleFraction", 0f, 1f).apply {
+    private val scaleAnimator  = ObjectAnimator.ofFloat(this, "currentScale",0f,1f)
+//        ObjectAnimator.ofFloat(this, "currentScale", 0f, 1f).apply {
 //            doOnEnd {
                 //加上跟随手指双击放大功能后，这里可以去掉了
                 //修复由于offsetX和offsetY没有重置导致图片再次放大时产生额外偏移：动画缩小后，重置图片偏移
@@ -64,8 +64,8 @@ class ScalableImageView @JvmOverloads constructor(
 //                offsetY = 0f
 //            }
 //            }
-        }
-    }
+//        }
+//    }
     private val overScroller = OverScroller(context)
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -81,25 +81,25 @@ class ScalableImageView @JvmOverloads constructor(
             smallScale = h.toFloat() / bitmap.height
             bigScale = w.toFloat() / bitmap.width * EXTRA_SCALE
         }
+        currentScale = smallScale
+        scaleAnimator.setFloatValues(smallScale,bigScale)
         Log.i("yanze", "big:$bigScale small:$smallScale")
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        if (!big && offsetX > 0) {
-            offsetX *= (scaleFraction)
-            offsetY *= (scaleFraction)
-        }
+        //计算动画完成度，决定了偏移影响度
+        val scaleFraction = (currentScale - smallScale) / (bigScale - smallScale)
         //让图片完成度对图片偏移产生影响
         canvas.translate(offsetX * scaleFraction,offsetY * scaleFraction)
-        val scale = smallScale + (bigScale - smallScale) * scaleFraction
-        canvas.scale(scale, scale, width / 2f, height / 2f)
+//        val scale = smallScale + (bigScale - smallScale) * scaleFraction
+        canvas.scale(currentScale, currentScale, width / 2f, height / 2f)
         canvas.drawBitmap(bitmap, originalOffsetX, originalOffsetY, paint)
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-//        return gestureDetector.onTouchEvent(event)
-        return scaleGestureDetector.onTouchEvent(event)
+        return gestureDetector.onTouchEvent(event)
+//        return scaleGestureDetector.onTouchEvent(event)
     }
 
 
