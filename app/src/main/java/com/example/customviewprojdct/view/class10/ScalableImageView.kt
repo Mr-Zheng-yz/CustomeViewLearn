@@ -11,10 +11,7 @@ import android.view.MotionEvent
 import android.view.ScaleGestureDetector
 import android.view.View
 import android.widget.OverScroller
-import android.widget.Scroller
-import androidx.core.animation.doOnEnd
 import androidx.core.view.GestureDetectorCompat
-import androidx.core.view.ScaleGestureDetectorCompat
 import androidx.core.view.ViewCompat
 import com.example.customviewprojdct.extensions.dp
 import com.example.customviewprojdct.extensions.getAvatart
