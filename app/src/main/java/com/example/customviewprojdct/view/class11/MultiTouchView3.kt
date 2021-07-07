@@ -10,6 +10,7 @@ import android.util.Log
 import android.util.SparseArray
 import android.view.MotionEvent
 import android.view.View
+import androidx.core.util.forEach
 import com.example.customviewprojdct.extensions.dp
 import com.example.customviewprojdct.extensions.getAvatart
 
@@ -17,8 +18,6 @@ import com.example.customviewprojdct.extensions.getAvatart
  * 支持多手指触摸View🤌
  * 3：各自为战型
  */
-private val IMAGE_SIZE = 200.dp
-
 class MultiTouchView3 @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -31,35 +30,43 @@ class MultiTouchView3 @JvmOverloads constructor(
         strokeCap = Paint.Cap.ROUND
         strokeJoin = Paint.Join.ROUND
     }
-//    private val path = Path()
     val pathArray = SparseArray<Path>()
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        for (i in 0..pathArray.size()) {
-            var path = pathArray.valueAt(i)
+        for (i in 0 until pathArray.size()) {
+            val path = pathArray.valueAt(i)
             canvas.drawPath(path, paint)
         }
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.actionMasked) {
-            //如果非最后一根手指抬起，如果不主动移除，那么坐标偏移还会按原本手势数计算，导致图片跟手指移动时"跳一下"
-            MotionEvent.ACTION_DOWN -> {
-//                path.moveTo(event.x, event.y)
-            }
-            MotionEvent.ACTION_POINTER_DOWN -> {
-
-            }
-            MotionEvent.ACTION_MOVE -> {
-//                path.lineTo(event.x, event.y)
+            MotionEvent.ACTION_DOWN,MotionEvent.ACTION_POINTER_DOWN -> {
+                val newPath = Path()
+                newPath.moveTo(event.getX(event.actionIndex),event.getY(event.actionIndex))
+                pathArray.append(event.getPointerId(event.actionIndex), newPath)
                 invalidate()
             }
-            MotionEvent.ACTION_POINTER_UP -> {
-
+            MotionEvent.ACTION_MOVE -> {
+                //几根手指非常快速的落下，滑动，抬起也会报错...
+                for (i in 0 until pathArray.size()) {
+//                  //这里默认 遍历的index 和 手指数下标是重合的
+//                    val actionId = event.getPointe标是重合的
+                    val actionId = event.getPointerId(i)
+                    val path = pathArray.get(actionId)
+                    path.lineTo(event.getX(i), event.getY(i))
+                }
+                //这样拿会报错：pointerIndex out of range
+//                pathArray.forEach { key, value ->
+//                    val index = event.findPointerIndex(key)
+//                    value.lineTo(event.getX(index),event.getY(index))
+//                }
+                invalidate()
             }
-            MotionEvent.ACTION_UP -> {
-//                path.reset()
+            MotionEvent.ACTION_POINTER_UP,MotionEvent.ACTION_UP -> {
+                val pointerUpId = event.getPointerId(event.actionIndex)
+                pathArray.remove(pointerUpId)
                 invalidate()
             }
         }
