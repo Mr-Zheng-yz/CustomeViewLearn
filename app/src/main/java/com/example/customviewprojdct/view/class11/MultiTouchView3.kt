@@ -31,11 +31,16 @@ class MultiTouchView3 @JvmOverloads constructor(
         strokeJoin = Paint.Join.ROUND
     }
     val pathArray = SparseArray<Path>()
+    val drawedArray = SparseArray<Path>()
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         for (i in 0 until pathArray.size()) {
             val path = pathArray.valueAt(i)
+            canvas.drawPath(path, paint)
+        }
+        for (i in 0 until drawedArray.size()) {
+            val path = drawedArray.valueAt(i)
             canvas.drawPath(path, paint)
         }
     }
@@ -66,6 +71,7 @@ class MultiTouchView3 @JvmOverloads constructor(
             }
             MotionEvent.ACTION_POINTER_UP,MotionEvent.ACTION_UP -> {
                 val pointerUpId = event.getPointerId(event.actionIndex)
+                drawedArray.append(System.currentTimeMillis().toInt(),pathArray.get(pointerUpId))
                 pathArray.remove(pointerUpId)
                 invalidate()
             }

@@ -6,9 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".activity.TestActivity">
 
-    <com.example.customviewprojdct.view.class11.MultiTouchView3
+    <com.example.customviewprojdct.view.class11.ThreeViewPager
         android:id="@+id/test_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/holo_blue_light"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/holo_red_light"/>
+
+    </com.example.customviewprojdct.view.class11.ThreeViewPager>
 
 </FrameLayout>
