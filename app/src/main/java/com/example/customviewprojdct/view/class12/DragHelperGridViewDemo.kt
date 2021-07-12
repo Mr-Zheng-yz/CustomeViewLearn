@@ -19,11 +19,13 @@ class DragHelperGridViewDemo @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
     private var contentView: View
-    var dragView: DragHelperGridView
+//    var dragView: DragHelperGridView
 
     init {
-        contentView = View.inflate(context, R.layout.demo_drag_layout, this)
-        dragView = contentView.findViewById(R.id.drag_layout)
+        //demo_drag_layout
+        //demo_drag_to_collect_layout
+        contentView = View.inflate(context, R.layout.demo_drag_up_down_layout, this)
+//        dragView = contentView.findViewById(R.id.drag_layout)
     }
 
 }

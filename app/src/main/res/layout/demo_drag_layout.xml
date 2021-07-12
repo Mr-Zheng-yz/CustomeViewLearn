@@ -6,8 +6,7 @@
     <com.example.customviewprojdct.view.class12.DragHelperGridView
         android:id="@+id/drag_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#300000FF" >
+        android:layout_height="match_parent" >
 
         <View
             android:layout_width="wrap_content"

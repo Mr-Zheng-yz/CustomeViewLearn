@@ -12,6 +12,8 @@ import android.view.ScaleGestureDetector
 import android.view.View
 import android.widget.OverScroller
 import androidx.core.view.GestureDetectorCompat
+import androidx.core.view.NestedScrollingChild3
+import androidx.core.view.NestedScrollingChildHelper
 import androidx.core.view.ViewCompat
 import com.example.customviewprojdct.extensions.dp
 import com.example.customviewprojdct.extensions.getAvatart
@@ -26,8 +28,12 @@ class ScalableImageView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : View(context, attrs, defStyleAttr){
+) : View(context, attrs, defStyleAttr),NestedScrollingChild3{
 
+    //操作器
+    private val childHelper = NestedScrollingChildHelper(this).apply {
+        isNestedScrollingEnabled = true
+    }
     private val bitmap = getAvatart(resources, 300.dp.toInt())
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var originalOffsetX = 0f
@@ -101,6 +107,8 @@ class ScalableImageView @JvmOverloads constructor(
         //进入捏撑流程，不再处理双击等手势
         if (!scaleGestureDetector.isInProgress) {
             gestureDetector.onTouchEvent(event)
+            //汇报所用动作，让其做侦测
+            childHelper.startNestedScroll(ViewCompat.SCROLL_AXIS_VERTICAL)
         }
         return true
     }
@@ -122,12 +130,15 @@ class ScalableImageView @JvmOverloads constructor(
             distanceY: Float
         ): Boolean {
             if (big) {
-//            Log.i("yanze","$distanceX $distanceY")
                 offsetX -= distanceX
                 offsetY -= distanceY
-                fixOffsets()
-//            Log.i("yanze","offset:$offsetX $offsetY")
-                invalidate()
+                val unconsumed = fixOffsets()
+                if (unconsumed != 0) {
+                    //第二遍问父View，要不要滑动
+                    childHelper.dispatchNestedScroll(0,0,0,unconsumed,null)
+                } else {
+                    invalidate()
+                }
             }
             return false
         }
@@ -174,11 +185,21 @@ class ScalableImageView @JvmOverloads constructor(
             return true
         }
 
-        fun fixOffsets() {
+        /**
+         * @return 返回修正了多少（没用完的滑动）
+         */
+        fun fixOffsets() :Int {
+            val rawOffsetY = offsetY
+            val maxOffsetY = (bitmap.height * bigScale - height) / 2
             offsetX = min(offsetX,(bitmap.width * bigScale - width) / 2)
             offsetX = max(offsetX,-(bitmap.width * bigScale - width) / 2)
             offsetY = min(offsetY,(bitmap.height * bigScale - height) / 2)
-            offsetY = max(offsetY,-(bitmap.height * bigScale - height) / 2)
+            offsetY = max(offsetY, -(bitmap.height * bigScale - height) / 2)
+            return when {
+                rawOffsetY < -maxOffsetY -> (-maxOffsetY - rawOffsetY).toInt()
+                rawOffsetY > maxOffsetY -> (maxOffsetY - rawOffsetY).toInt()
+                else -> 0
+            }
         }
 
     }
@@ -230,6 +251,56 @@ class ScalableImageView @JvmOverloads constructor(
 
         override fun onScaleEnd(detector: ScaleGestureDetector?) {
         }
+    }
+
+    /**
+     * 与父View协商滑动
+     */
+    override fun startNestedScroll(axes: Int, type: Int): Boolean {
+        return childHelper.startNestedScroll(axes,type)
+    }
+
+    override fun stopNestedScroll(type: Int) {
+        childHelper.stopNestedScroll(type)
+    }
+
+    override fun hasNestedScrollingParent(type: Int): Boolean {
+        return childHelper.hasNestedScrollingParent(type)
+    }
+
+    override fun dispatchNestedScroll(
+        dxConsumed: Int,
+        dyConsumed: Int,
+        dxUnconsumed: Int,
+        dyUnconsumed: Int,
+        offsetInWindow: IntArray?,
+        type: Int,
+        consumed: IntArray
+    ) {
+        childHelper.dispatchNestedScroll(dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, offsetInWindow,type, consumed)
+    }
+
+    //第二次问父View，要不要第二次优先滑动
+    override fun dispatchNestedScroll(
+        dxConsumed: Int,
+        dyConsumed: Int,
+        dxUnconsumed: Int,
+        dyUnconsumed: Int,
+        offsetInWindow: IntArray?,
+        type: Int
+    ): Boolean {
+        return childHelper.dispatchNestedScroll(dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, offsetInWindow,type)
+    }
+
+    //问父View，要不要第一次优先滑动
+    override fun dispatchNestedPreScroll(
+        dx: Int,
+        dy: Int,
+        consumed: IntArray?,
+        offsetInWindow: IntArray?,
+        type: Int
+    ): Boolean {
+        return childHelper.dispatchNestedPreScroll(dx,dy,consumed, offsetInWindow, type)
     }
 
 }
