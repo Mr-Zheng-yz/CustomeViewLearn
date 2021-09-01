@@ -12,6 +12,10 @@ class CircleView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
+    companion object{
+        val MAX_RADIO = 200.dp
+        val MIN_RADIO = 50.dp
+    }
 
     val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.BLUE

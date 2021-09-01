@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activity.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,6 +24,48 @@
             android:layout_height="wrap_content"
             android:onClick="classEntrance"
             android:text="2.Xfermode完全使用解析" />
+
+        <Button
+            android:id="@+id/class_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="classEntrance"
+            android:text="3.文字的测量" />
+
+        <Button
+            android:id="@+id/class_4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="classEntrance"
+            android:text="4.范围裁切和几何变换" />
+
+        <Button
+            android:id="@+id/class_5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="classEntrance"
+            android:text="5.属性动画和硬件加速" />
+
+        <Button
+            android:id="@+id/class_6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="classEntrance"
+            android:text="6.Bitmap 和 Drawable" />
+
+        <Button
+            android:id="@+id/class_7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="classEntrance"
+            android:text="7.手写MaterialEditText" />
+
+        <Button
+            android:id="@+id/class_8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="classEntrance"
+            android:text="8.自定义布局：measure" />
 
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

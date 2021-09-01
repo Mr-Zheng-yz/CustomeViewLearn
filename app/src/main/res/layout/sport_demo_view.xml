@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="false"
-            android:textOff="通过bounds测量"
+            android:textOff="通过bounds测量居中"
             android:textOn="通过ascent和descent"/>
 
         <ToggleButton

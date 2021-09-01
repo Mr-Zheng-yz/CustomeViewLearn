@@ -139,6 +139,9 @@ class ScalableImageView @JvmOverloads constructor(
                 } else {
                     invalidate()
                 }
+            } else {
+                //第二遍问父View，要不要滑动
+                childHelper.dispatchNestedScroll(0,0,0, distanceY.toInt(),null)
             }
             return false
         }

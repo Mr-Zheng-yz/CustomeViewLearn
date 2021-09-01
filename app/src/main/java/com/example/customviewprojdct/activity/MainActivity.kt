@@ -20,6 +20,24 @@ class MainActivity : AppCompatActivity() {
             R.id.class_2 -> {
                 ClassTwoActivity.start(this)
             }
+            R.id.class_3 -> {
+                ClassThreeActivity.start(this)
+            }
+            R.id.class_4 -> {
+                ClassFourActivity.start(this)
+            }
+            R.id.class_5 -> {
+                ClassFiveActivity.start(this)
+            }
+            R.id.class_6 -> {
+                ClassSixActivity.start(this)
+            }
+            R.id.class_7 -> {
+                ClassSevenActivity.start(this)
+            }
+            R.id.class_8 -> {
+                ClassEightActivity.start(this)
+            }
         }
     }
 

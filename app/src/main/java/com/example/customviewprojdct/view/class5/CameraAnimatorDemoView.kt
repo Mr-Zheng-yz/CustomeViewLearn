@@ -43,19 +43,19 @@ class CameraAnimatorDemoView @JvmOverloads constructor(
         cameraView = contentView.findViewById(R.id.camera_view)
 
         cameraView.setOnClickListener {
-            //3. AnimatorSet
-//            val bottomFlipAnimator = ObjectAnimator.ofFloat(cameraView, "bottomFlip",  30f)
-//            bottomFlipAnimator.duration = 1000
+            //3. AnimatorSet 设置多个属性动画的执行顺序
+            val bottomFlipAnimator = ObjectAnimator.ofFloat(cameraView, "bottomFlip",  30f)
+            bottomFlipAnimator.duration = 1000
 
-//            val flipRotationAnimator = ObjectAnimator.ofFloat(cameraView, "flipRotation",  360f)
-//            flipRotationAnimator.duration = 2000
+            val flipRotationAnimator = ObjectAnimator.ofFloat(cameraView, "flipRotation",  360f)
+            flipRotationAnimator.duration = 2000
 
-//            val topFlipAnimator = ObjectAnimator.ofFloat(cameraView, "topFlip",  -30f)
-//            topFlipAnimator.duration = 1000
+            val topFlipAnimator = ObjectAnimator.ofFloat(cameraView, "topFlip",  -30f)
+            topFlipAnimator.duration = 1000
             //使用AnimatorSet管理
-//            val animatorSet = AnimatorSet()
-//            animatorSet.playSequentially(bottomFlipAnimator, flipRotationAnimator, topFlipAnimator)
-//            animatorSet.start()
+            val animatorSet = AnimatorSet()
+            animatorSet.playSequentially(bottomFlipAnimator, flipRotationAnimator, topFlipAnimator)
+            animatorSet.start()
 
             //4.使用propertyValueHolder做动画(多个属性合成到同一个动画中)
 //            val bottomFlipHolder = PropertyValuesHolder.ofFloat("bottomFlip", 0f,30f)

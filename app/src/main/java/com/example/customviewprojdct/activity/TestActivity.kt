@@ -31,17 +31,6 @@ class TestActivity : AppCompatActivity() {
         testView = findViewById(R.id.test_view)
 
         testView.setOnClickListener {
-
-            //Point属性动画
-//            val animator = ObjectAnimator.ofObject(testView,"point",
-//                PointFEvaluator(),PointF(0f,0f),PointF(200.dp,200.dp))
-//            animator.duration = 1000
-//            animator.start()
-
-            //字符串属性动画
-//            val animator = ObjectAnimator.ofObject(testView,"province",ProvinceEvaluator(),"北京市","澳门特别行政区")
-//            animator.duration = 5000
-//            animator.start()
         }
     }
 }

@@ -16,6 +16,13 @@ private val HORIZONTAL_OFFSET = 5.dp
 private val VERTICAL_OFFSET = 22.dp
 private val EXTRA_VERTICAL_OFFSET = 25.dp
 
+/**
+ * @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+ 使用这种方式居然无法获取焦点！！
+ */
 class MaterialEditText constructor(
     context: Context,
     attrs: AttributeSet
@@ -54,13 +61,13 @@ class MaterialEditText constructor(
             typeArray.getBoolean(R.styleable.MaterialEditText_userFloatingLabel, true)
         typeArray.recycle()
 
-        //放肆改
+        //知晓原理，放肆改
 //        val typeArray = context.obtainStyledAttributes(attrs, intArrayOf(R.attr.useMaterialThemeColors))
 //        useFloatingLabel = typeArray.getBoolean(0,true)
 
-        for (i in 0 until attrs.attributeCount) {
-            println("attrs: ${attrs.getAttributeName(i)} value:${attrs.getAttributeValue(i)}")
-        }
+//        for (i in 0 until attrs.attributeCount) {
+//            println("attrs: ${attrs.getAttributeName(i)} value:${attrs.getAttributeValue(i)}")
+//        }
 
         paint.textSize = TEXT_SIZE
     }

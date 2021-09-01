@@ -8,29 +8,23 @@ import com.example.customviewprojdct.view.class2.AvatarView
 import com.example.customviewprojdct.view.class2.ScratchCardView
 import com.example.customviewprojdct.view.class2.TextLoadingView
 import com.example.customviewprojdct.view.class2.XfermodeViewDemoView
+import com.example.customviewprojdct.view.class3.MultiLineTextView
+import com.example.customviewprojdct.view.class3.SportDemoView
+import com.example.customviewprojdct.view.class4.CameraView
+import com.example.customviewprojdct.view.class4.TestCanvasChangeView
 
-class ClassTwoActivity : BaseClassActivity() {
+class ClassFourActivity : BaseClassActivity() {
     companion object {
         fun start(context: Context) {
-            context.startActivity(Intent(context, ClassTwoActivity::class.java))
+            context.startActivity(Intent(context, ClassFourActivity::class.java))
         }
     }
 
     override fun initData(): MutableList<Triple<String, String, Class<out View>?>> {
         return mutableListOf(
-            Triple("1", "圆形头像", AvatarView::class.java),
-            Triple("2", "刮刮卡", ScratchCardView::class.java),
-            Triple("3", "文字Loading", TextLoadingView::class.java),
-            Triple("4", "Xfermode效果", XfermodeViewDemoView::class.java)
+            Triple("1", "几何变换思想", TestCanvasChangeView::class.java),
+            Triple("2", "例子", CameraView::class.java)
         )
-    }
-
-    override fun onButtonItemExtraEvent(view: View) {
-        when (view) {
-            is TextLoadingView -> {
-                view.startAnimator()
-            }
-        }
     }
 
 }

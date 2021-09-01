@@ -50,9 +50,9 @@ class TestCanvasChangeView @JvmOverloads constructor(
 //        canvas.drawBitmap(getAvatart(IMAGE_SIZE.toInt()), IMAGE_PADDING, IMAGE_PADDING, paint)
 
         //反向思考图形（推荐）
-//        canvas.rotate(45f, 2*IMAGE_PADDING + IMAGE_SIZE / 2, IMAGE_PADDING + IMAGE_SIZE / 2)
-//        canvas.translate(IMAGE_PADDING,0f)
-//        canvas.drawBitmap(getAvatart(IMAGE_SIZE.toInt()), IMAGE_PADDING, IMAGE_PADDING, paint)
+        canvas.rotate(45f, 2*IMAGE_PADDING + IMAGE_SIZE / 2, IMAGE_PADDING + IMAGE_SIZE / 2)
+        canvas.translate(IMAGE_PADDING,0f)
+        canvas.drawBitmap(getAvatart(IMAGE_SIZE.toInt()), IMAGE_PADDING, IMAGE_PADDING, paint)
 
         //画Canvas坐标辅助线
         val linesX = floatArrayOf(0f,0f,width.toFloat(),0f

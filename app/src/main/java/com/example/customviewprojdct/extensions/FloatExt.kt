@@ -1,9 +1,11 @@
 package com.example.customviewprojdct.extensions
 
+import android.content.Context
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.TypedValue
+import android.widget.Toast
 import com.example.customviewprojdct.R
 
 val Float.dp
@@ -32,4 +34,8 @@ fun getAvatart(resources: Resources, width: Int): Bitmap {
     options.inDensity = options.outWidth
     options.inTargetDensity = width
     return BitmapFactory.decodeResource(resources, R.drawable.avatar, options)
+}
+
+fun Context.showToast(msg:String){
+    Toast.makeText(this,msg,Toast.LENGTH_SHORT).show()
 }

@@ -25,6 +25,7 @@ class JKLikeView @JvmOverloads constructor(
         textAlign = Paint.Align.CENTER
     }
     var number : Int = 88
+    var numberArray : MutableList<String>? = null
     var nextNumber = 0
     var fraction = 0f
         set(value) {
@@ -67,6 +68,8 @@ class JKLikeView @JvmOverloads constructor(
         //无需改动文字
 //        canvas.drawText(nextNumber.toString(), width / 2f, height / 2f - EXTRA_VERTICAL_OFFSET, paint)
 
+        arrayOf(number)
+
         //新文字
         paint.alpha = (0xff * fraction).toInt()
         val offset = EXTRA_VERTICAL_OFFSET * fraction
@@ -75,6 +78,11 @@ class JKLikeView @JvmOverloads constructor(
         //旧文字
         paint.alpha = (0xff * (1 - fraction)).toInt()
         canvas.drawText(number.toString(), width / 2f, height / 2f + offset, paint)
+    }
+
+    fun setNumber(number: String) {
+        numberArray = arrayOf(number).toMutableList()
+
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
