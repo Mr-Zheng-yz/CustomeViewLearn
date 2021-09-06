@@ -67,5 +67,47 @@
             android:onClick="classEntrance"
             android:text="8.自定义布局：measure" />
 
+        <Button
+            android:id="@+id/class_9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="classEntrance"
+            android:text="9.触摸反馈原理" />
+
+        <Button
+            android:id="@+id/class_10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="classEntrance"
+            android:text="10.双向滑动的ScalableImageView" />
+
+        <Button
+            android:id="@+id/class_11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="classEntrance"
+            android:text="11.多点触控原理与写法全解析" />
+
+        <Button
+            android:id="@+id/class_12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="classEntrance"
+            android:text="12.拖拽API详解" />
+
+        <Button
+            android:id="@+id/class_13"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="classEntrance"
+            android:text="13.嵌套滑动" />
+
+        <Button
+            android:id="@+id/class_14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="classEntrance"
+            android:text="13.滑动冲突场景（NestedScrollView解决）" />
+
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

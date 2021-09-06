@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CustomViewProjdct">
-        <activity android:name=".activity.NestedScrollImageActivity">
+        <activity android:name=".activity.class_package.NestedScrollImageActivity">
             <!--            <intent-filter>-->
             <!--                <action android:name="android.intent.action.MAIN" />-->
 
@@ -37,14 +37,17 @@
             <!--                 <category android:name="android.intent.category.LAUNCHER" />-->
             <!--             </intent-filter>-->
         </activity>
-        <activity android:name=".activity.ClassOneActivity" />
-        <activity android:name=".activity.ClassTwoActivity" />
-        <activity android:name=".activity.ClassThreeActivity" />
-        <activity android:name=".activity.ClassFourActivity" />
-        <activity android:name=".activity.ClassFiveActivity" />
-        <activity android:name=".activity.ClassSixActivity" />
-        <activity android:name=".activity.ClassSevenActivity" />
-        <activity android:name=".activity.ClassEightActivity" />
+        <activity android:name=".activity.class_package.ClassOneActivity" />
+        <activity android:name=".activity.class_package.ClassTwoActivity" />
+        <activity android:name=".activity.class_package.ClassThreeActivity" />
+        <activity android:name=".activity.class_package.ClassFourActivity" />
+        <activity android:name=".activity.class_package.ClassFiveActivity" />
+        <activity android:name=".activity.class_package.ClassSixActivity" />
+        <activity android:name=".activity.class_package.ClassSevenActivity" />
+        <activity android:name=".activity.class_package.ClassEightActivity" />
+        <activity android:name=".activity.class_package.ClassTenActivity" />
+        <activity android:name=".activity.class_package.ClassElevenActivity" />
+        <activity android:name=".activity.class_package.ClassTwelveActivity" />
     </application>
 
 </manifest>

@@ -10,6 +10,9 @@ import android.widget.FrameLayout
 import androidx.customview.widget.ViewDragHelper
 import kotlin.math.abs
 
+/**
+ * ViewDragHelper
+ */
 class DragUpDownLayout @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,

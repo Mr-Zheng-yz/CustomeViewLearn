@@ -1,6 +1,8 @@
 package com.example.customviewprojdct.view.class8
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
 import android.view.View
 import com.example.customviewprojdct.extensions.dp
@@ -10,6 +12,10 @@ class OneHundredView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
+
+    init {
+        background = ColorDrawable(Color.BLUE)
+    }
 
     //第一次不听父View话（父View可修正）
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {

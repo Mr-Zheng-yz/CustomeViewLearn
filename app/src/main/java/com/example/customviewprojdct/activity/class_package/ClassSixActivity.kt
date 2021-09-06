@@ -1,8 +1,9 @@
-package com.example.customviewprojdct.activity
+package com.example.customviewprojdct.activity.class_package
 
 import android.content.Context
 import android.content.Intent
 import android.view.View
+import com.example.customviewprojdct.activity.BaseClassActivity
 import com.example.customviewprojdct.view.class6.DrawableView
 
 class ClassSixActivity : BaseClassActivity() {

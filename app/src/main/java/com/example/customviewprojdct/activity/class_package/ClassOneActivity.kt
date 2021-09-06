@@ -1,16 +1,12 @@
-package com.example.customviewprojdct.activity
+package com.example.customviewprojdct.activity.class_package
 
 import android.content.Context
 import android.content.Intent
 import android.view.View
-import com.example.customviewprojdct.extensions.showToast
+import com.example.customviewprojdct.activity.BaseClassActivity
 import com.example.customviewprojdct.view.class1.DashboardView
 import com.example.customviewprojdct.view.class1.PieView
 import com.example.customviewprojdct.view.class1.TestView
-import com.example.customviewprojdct.view.class2.AvatarView
-import com.example.customviewprojdct.view.class2.ScratchCardView
-import com.example.customviewprojdct.view.class2.TextLoadingView
-import com.example.customviewprojdct.view.class2.XfermodeViewDemoView
 
 class ClassOneActivity : BaseClassActivity() {
     companion object {

@@ -3,8 +3,9 @@ package com.example.customviewprojdct.activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.recyclerview.widget.RecyclerView
 import com.example.customviewprojdct.R
+import com.example.customviewprojdct.activity.class_package.*
+import com.example.customviewprojdct.extensions.showToast
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +38,24 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.class_8 -> {
                 ClassEightActivity.start(this)
+            }
+            R.id.class_9 -> {
+                showToast("了解View和ViewGroup事件分发时序源码逻辑～")
+            }
+            R.id.class_10 -> {
+                ClassTenActivity.start(this)
+            }
+            R.id.class_11 -> {
+                ClassElevenActivity.start(this)
+            }
+            R.id.class_12 -> {
+                ClassTwelveActivity.start(this)
+            }
+            R.id.class_13 -> {
+                NestedScrollImageActivity.start(this)
+            }
+            R.id.class_14 -> {
+                ScrollClashActivity.start(this)
             }
         }
     }

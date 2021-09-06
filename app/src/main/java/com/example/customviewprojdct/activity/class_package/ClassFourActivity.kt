@@ -1,15 +1,9 @@
-package com.example.customviewprojdct.activity
+package com.example.customviewprojdct.activity.class_package
 
 import android.content.Context
 import android.content.Intent
 import android.view.View
-import com.example.customviewprojdct.extensions.showToast
-import com.example.customviewprojdct.view.class2.AvatarView
-import com.example.customviewprojdct.view.class2.ScratchCardView
-import com.example.customviewprojdct.view.class2.TextLoadingView
-import com.example.customviewprojdct.view.class2.XfermodeViewDemoView
-import com.example.customviewprojdct.view.class3.MultiLineTextView
-import com.example.customviewprojdct.view.class3.SportDemoView
+import com.example.customviewprojdct.activity.BaseClassActivity
 import com.example.customviewprojdct.view.class4.CameraView
 import com.example.customviewprojdct.view.class4.TestCanvasChangeView
 
