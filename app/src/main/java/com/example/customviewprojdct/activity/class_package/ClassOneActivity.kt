@@ -11,6 +11,7 @@ import com.example.customviewprojdct.view.class1.DashboardView
 import com.example.customviewprojdct.view.class1.PieView
 import com.example.customviewprojdct.view.class1.TestView
 import com.example.customviewprojdct.view.class8.SquareImageView
+import com.example.customviewprojdct.view.other.DashboardProgressView
 import com.example.customviewprojdct.view.other.RectProgressView
 
 class ClassOneActivity : BaseClassActivity() {
@@ -23,9 +24,10 @@ class ClassOneActivity : BaseClassActivity() {
     override fun initData(): MutableList<Triple<String, String, Class<out View>?>> {
         return mutableListOf(
             Triple("1", "测试", TestView::class.java),
-            Triple("1", "测试2", RectProgressView::class.java),
             Triple("2", "仪表盘", DashboardView::class.java),
-            Triple("3", "饼图", PieView::class.java)
+            Triple("3", "饼图", PieView::class.java),
+            Triple("4", "矩形进度", RectProgressView::class.java),
+            Triple("5", "圆形进度", DashboardProgressView::class.java)
         )
     }
 
@@ -40,6 +42,15 @@ class ClassOneActivity : BaseClassActivity() {
 //                    view.rectCount = 2
                     view.setProgress(80f, true)
                                  },1000)
+            }
+            is DashboardProgressView -> {
+                val params = FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT)
+                view.layoutParams = params
+
+                view.postDelayed({
+//                    view.rectCount = 2
+                    view.setProgress(80f, true)
+                },1000)
             }
         }
     }

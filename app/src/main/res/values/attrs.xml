@@ -4,4 +4,12 @@
         <attr name="userFloatingLabel" format="boolean"/>
     </declare-styleable>
 
+    <declare-styleable name="DashboardProgressView">
+        <attr name="progressColor" format="color"/>
+        <attr name="progressTextColor" format="color"/>
+        <attr name="circleBackgroundColor" format="color"/>
+        <attr name="titleTextColor" format="color"/>
+        <attr name="titleText" format="string"/>
+    </declare-styleable>
+
 </resources>
