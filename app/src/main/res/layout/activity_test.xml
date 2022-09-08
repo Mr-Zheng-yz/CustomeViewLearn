@@ -1,14 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:clipChildren="false"
     tools:context=".activity.TestActivity">
 
-    <com.example.customviewprojdct.view.other.GameView
+    <Button
         android:id="@+id/test_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content" />
 
-</FrameLayout>
+    <!--    <com.example.customviewprojdct.view.other.GameView-->
+    <!--        android:layout_width="100dp"-->
+    <!--        android:layout_height="100dp"-->
+    <!--        android:background="@color/teal_200"/>-->
+
+    <com.example.customviewprojdct.view.other.roundViewGroup.RoundConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:cl_cornerRadius_leftBottom="0dp"
+        app:cl_cornerRadius_leftTop="12dp"
+        app:cl_cornerRadius_rightBottom="0dp"
+        app:cl_cornerRadius_rightTop="12dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/shadow_shape" />
+
+    </com.example.customviewprojdct.view.other.roundViewGroup.RoundConstraintLayout>
+
+    <com.example.customviewprojdct.view.other.RoundShapeView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp" />
+
+    <FrameLayout
+        android:layout_width="60dp"
+        android:layout_height="60dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/shadow_shape" />
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginEnd="-4dp"
+            android:layout_marginBottom="-4dp"
+            android:src="@drawable/scratch_card"
+            android:layout_gravity="end|bottom"/>
+
+    </FrameLayout>
+
+</LinearLayout>
