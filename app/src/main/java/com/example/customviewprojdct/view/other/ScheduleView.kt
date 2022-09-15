@@ -11,10 +11,8 @@ import java.lang.Math.abs
 
 /**
  * 日程表View
- * TODO：
  * 1.稳定性保证（区间排重和排序）
  * 2.保持两位小数计算？
- * 3.优化绘制代码（减少onDraw中循环）
  */
 class ScheduleView @JvmOverloads constructor(
     context: Context,
@@ -25,7 +23,7 @@ class ScheduleView @JvmOverloads constructor(
 
     private var rectWidth = 20.dp
     private var rectHeight = 20.dp
-    private var offsetX = 5.dp
+    private var offsetX = 6.dp  //进度条左右间隔（紧贴边会导致左右两侧文字显示不全）
 
     private val dashPath = Path()
 
@@ -46,14 +44,21 @@ class ScheduleView @JvmOverloads constructor(
 
     private val textHeight = scalePaint.fontMetrics.let { abs(it.ascent - it.descent) }
 
-    //日程区间
-    private var drawScheduleRange = arrayListOf<Triple<Boolean, Float,Float>>()
+    //我的日程区间
+    private var myDrawScheduleRange = arrayListOf<Pair<Float, Float>>()  //first：开始点，second：结束点
+
+    //其他人的日程
+    private var otherDrawScheduleRange = arrayListOf<Pair<Float, Float>>()
+
+    //存储测量后的日程（真正绘制范围）
+    private val drawRange = arrayListOf<Triple<Boolean, Float, Float>>()
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
-        reMeasureRect()
+        reMeasureBgRect()
+        reMeasureSchedule()
     }
 
-    private fun reMeasureRect() {
+    private fun reMeasureBgRect() {
         val length = scheduleRange.last - scheduleRange.first
         rectWidth = (width - (2 * offsetX)) / (length)
         rectHeight = height - textHeight
@@ -77,26 +82,34 @@ class ScheduleView @JvmOverloads constructor(
         }
     }
 
-    private val drawRange = arrayListOf<Triple<Boolean, Float, Float>>()
 
-    private fun measureDrawRange() {
-        drawScheduleRange.forEach {
-            var startPoint = 0f
-            var overWidth = 0f
+    private fun reMeasureSchedule() {
+        drawRange.clear()
+        measureDrawRange(myDrawScheduleRange, true)
+        measureDrawRange(otherDrawScheduleRange, false)
+    }
 
-            val wd = it.third - it.second
-            val count = (wd / 1).toInt()
-            val diff = wd % 1
-            overWidth = count * rectWidth + diff * rectWidth  //TODO：0.5进1
-            Log.i("baize_", "count:$count diff:$diff drawWidth:$overWidth  rectWidth:$$rectWidth")
+    private fun measureDrawRange(ranges: ArrayList<Pair<Float, Float>>, isMy: Boolean) {
+        val maxWidth = width - offsetX
+        ranges.forEach {
             //确定起点
-            val sd = it.second - scheduleRange.first
+            val sd = it.first - scheduleRange.first
             val countS = (sd / 1).toInt()
             val diffS = (sd % 1)
-            startPoint = offsetX + (countS * rectWidth + diffS * rectWidth)
+            val startPoint = offsetX + (countS * rectWidth + diffS * rectWidth)
             Log.i("baize_", "countS:$countS diffS:$diffS drawStart:${startPoint}")
 
-            drawRange.add(Triple(it.first, startPoint, overWidth))
+            //确定长度
+            val wd = it.second - it.first
+            val count = (wd / 1).toInt()
+            val diff = wd % 1
+            var overWidth = count * rectWidth + diff * rectWidth  //TODO：可做0.5进1
+            if (startPoint + overWidth > maxWidth) {  //超过区间范围修正
+                overWidth = maxWidth - startPoint
+            }
+            Log.i("baize_", "count:$count diff:$diff drawWidth:$overWidth  rectWidth:$$rectWidth")
+
+            drawRange.add(Triple(isMy, startPoint, overWidth))
         }
     }
 
@@ -105,10 +118,11 @@ class ScheduleView @JvmOverloads constructor(
 
         scheduleRange.forEachIndexed { index, e ->
             scalePaint.color = Color.BLACK
-            drawScheduleRange.forEach {
-                if (it.first && e.toFloat() in it.second..it.third) {
+            for (i in 0 until myDrawScheduleRange.size) {
+                if (e.toFloat() in myDrawScheduleRange[i].first..myDrawScheduleRange[i].second) {
                     scalePaint.color = Color.RED
                     Log.i("baize_", "text red:${e}")
+                    break
                 }
             }
             canvas.drawText(
@@ -139,26 +153,20 @@ class ScheduleView @JvmOverloads constructor(
     }
 
     fun clearSchedule() {
-        drawScheduleRange.clear()
+        myDrawScheduleRange.clear()
+        otherDrawScheduleRange.clear()
     }
 
     fun addMySchedule(start: Float, end: Float) {
-//        if (!start in scheduleRange || !end in scheduleRange) return
-        drawScheduleRange.add(Triple(true, start, end))
-        //区间排重和排序
-        invalidate()
+        myDrawScheduleRange.add(Pair(start, end))
     }
 
     fun addOtherSchedule(start: Float, end: Float) {
-//        if (!start in scheduleRange || !end in scheduleRange) return
-        drawScheduleRange.add(Triple(false, start, end))
-        //区间排重和排序
-        invalidate()
+        otherDrawScheduleRange.add(Pair(start, end))
     }
 
     fun notifyChange() {
-        //TODO 区间排重和排序
-        measureDrawRange()
+        reMeasureSchedule()
         invalidate()
     }
 

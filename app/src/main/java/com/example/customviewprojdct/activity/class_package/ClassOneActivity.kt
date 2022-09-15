@@ -55,15 +55,18 @@ class ClassOneActivity : BaseClassActivity() {
                 },1000)
             }
             is ScheduleView -> {
-                val params = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT)
+                val params = FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT)
                 view.layoutParams = params
-                view.post {
-                    view.addOtherSchedule(7.3f, 10f)
-//                    view.addOtherSchedule(11f, 12f)
-//                    view.addMySchedule(16f, 18.8f)
-//                    view.addMySchedule(20f, 23f)
-                    view.notifyChange()
-                }
+                view.addOtherSchedule(7.3f, 10f)
+                view.addOtherSchedule(11f, 12f)
+                view.addMySchedule(16f, 18.8f)
+                view.addMySchedule(20f, 24f)
+                view.notifyChange()
+//                view.postDelayed({
+//                    view.clearSchedule()
+//                    view.addOtherSchedule(7f, 25f)
+//                    view.notifyChange()
+//                }, 2000)
             }
         }
     }
